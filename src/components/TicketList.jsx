@@ -18,7 +18,7 @@ function TicketList(props){
           key={ticketId}
           onTicketSelection={props.onTicketSelection}
           ticketId={ticketId}
-          />;
+        />;
       })}
     </div>
   );
