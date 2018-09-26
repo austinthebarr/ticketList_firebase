@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import constants from './../constants';
 const { c } = constants;
+import * as actions from './../actions';
 
 class App extends React.Component {
 
@@ -23,6 +24,11 @@ class App extends React.Component {
   //   };
   //   this.handleChangingSelectedTicket = this.handleChangingSelectedTicket.bind(this);
   // }
+  componentWillMount(){
+    const { dispatch } = this.props;
+    const { watchFirebaseTicketsRef } = actions;
+    dispatch(watchFirebaseTicketsRef());
+  }
 
   componentDidMount() {
     this.waitTimeUpdateTimer = setInterval(() =>
@@ -39,7 +45,7 @@ class App extends React.Component {
     const { dispatch } = this.props;
     Object.keys(this.props.masterTicketList).map(ticketId => {
       const ticket = this.props.masterTicketList[ticketId];
-      const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
+      const newFormattedWaitTime = new Moment(ticket.timeOpen).from(new Moment());
       const action = {
         type: c.UPDATE_TIME,
         id: ticketId,
